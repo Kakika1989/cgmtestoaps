@@ -4,67 +4,70 @@ require('should');
 var _ = require('lodash');
 var benv = require('benv');
 var read = require('fs').readFileSync;
-var serverSettings = require('./fixtures/default-server-settings');
-
-var nowData = {
-  sgvs: [
-    { mgdl: 100, mills: Date.now(), direction: 'Flat', type: 'sgv' }
-  ]
-};
-
-var someData = {
-  '/api/v1/devicestatus.json?count=500': [
-    {
-    '_id': {
-        '$oid': '56096da3c5d0fef41b212362'
-    },
-    'uploaderBattery': 37,
-    'created_at': '2015-09-28T16:41:07.144Z'
-    },
-    {
-    '_id': {
-        '$oid': '56096da3c5d0fef41b212363'
-    },
-    'uploaderBattery': 38,
-    'created_at': '2025-09-28T16:41:07.144Z'
-    }
-  ],
-  '/api/v1/devicestatus/?find[created_at][$lte]=': {
-    n: 1
-  },
-  '/api/v1/treatments.json?&find[created_at][$gte]=': [
-      {
-        '_id':  '5609a9203c8104a8195b1c1e',
-        'enteredBy': '',
-        'eventType': 'Carb Correction',
-        'carbs': 3,
-        'created_at': '2025-09-28T20:54:00.000Z'
-      }
-    ],
-  '/api/v1/treatments/?find[created_at][$lte]=': {
-    n: 1
-  },
-  '/api/v1/entries.json?&find[date][$gte]=': [
-      {
-        '_id': '560983f326c5a592d9b9ae0c',
-        'device': 'dexcom',
-        'date': 1543464149000,
-        'sgv': 83,
-        'direction': 'Flat',
-        'type': 'sgv',
-        'filtered': 107632,
-        'unfiltered': 106256,
-        'rssi': 178,
-        'noise': 1
-      }
-    ],
-  '/api/v1/entries/?find[date][$lte]=': {
-    n: 1
-  },
-};
 
 
 describe('admintools', function ( ) {
+
+  var serverSettings = require('./fixtures/default-server-settings');
+
+  var nowData = {
+    sgvs: [
+      { mgdl: 100, mills: Date.now(), direction: 'Flat', type: 'sgv' }
+    ]
+  };
+  
+  var someData = {
+    '/api/v1/devicestatus.json?count=500': [
+      {
+      '_id': {
+          '$oid': '56096da3c5d0fef41b212362'
+      },
+      'uploaderBattery': 37,
+      'created_at': '2015-09-28T16:41:07.144Z'
+      },
+      {
+      '_id': {
+          '$oid': '56096da3c5d0fef41b212363'
+      },
+      'uploaderBattery': 38,
+      'created_at': '2025-09-28T16:41:07.144Z'
+      }
+    ],
+    '/api/v1/devicestatus/?find[created_at][$lte]=': {
+      n: 1
+    },
+    '/api/v1/treatments.json?&find[created_at][$gte]=': [
+        {
+          '_id':  '5609a9203c8104a8195b1c1e',
+          'enteredBy': '',
+          'eventType': 'Carb Correction',
+          'carbs': 3,
+          'created_at': '2025-09-28T20:54:00.000Z'
+        }
+      ],
+    '/api/v1/treatments/?find[created_at][$lte]=': {
+      n: 1
+    },
+    '/api/v1/entries.json?&find[date][$gte]=': [
+        {
+          '_id': '560983f326c5a592d9b9ae0c',
+          'device': 'dexcom',
+          'date': 1543464149000,
+          'sgv': 83,
+          'direction': 'Flat',
+          'type': 'sgv',
+          'filtered': 107632,
+          'unfiltered': 106256,
+          'rssi': 178,
+          'noise': 1
+        }
+      ],
+    '/api/v1/entries/?find[date][$lte]=': {
+      n: 1
+    },
+  };
+  
+
   var self = this;
   this.timeout(45000); // TODO: see why this test takes longer on CI to complete
   before(function (done) {

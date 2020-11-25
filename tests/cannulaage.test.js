@@ -1,15 +1,17 @@
 'use strict';
 
 require('should');
-var levels = require('../lib/levels');
 
 describe('cage', function ( ) {
   var env = require('../env')();
   var ctx = {};
+  const levels = require('../lib/levels');
+  ctx.levels = levels;
+
   ctx.ddata = require('../lib/data/ddata')();
-  ctx.notifications = require('../lib/notifications')(env, ctx);
   ctx.language = require('../lib/language')();
 
+  ctx.notifications = require('../lib/notifications')(env, ctx);
   var cage = require('../lib/plugins/cannulaage')(ctx);
   var sandbox = require('../lib/sandbox')();
   function prepareSandbox ( ) {

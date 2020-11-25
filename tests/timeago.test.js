@@ -1,14 +1,15 @@
 var should = require('should');
-var levels = require('../lib/levels');
+const levels = require('../lib/levels');
 var times = require('../lib/times');
 
 describe('timeago', function() {
   var ctx = {};
   ctx.ddata = require('../lib/data/ddata')();
-  ctx.notifications = require('../lib/notifications')(env, ctx);
   ctx.language = require('../lib/language')();
   ctx.settings = require('../lib/settings')();
   ctx.settings.heartbeat = 0.5; // short heartbeat to speedup tests
+  ctx.levels = levels;
+  ctx.notifications = require('../lib/notifications')(env, ctx);
 
   var timeago = require('../lib/plugins/timeago')(ctx);
 

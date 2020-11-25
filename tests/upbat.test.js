@@ -7,6 +7,8 @@ const fs = require('fs');
 describe('Uploader Battery', function ( ) {
   var data = {devicestatus: [{mills: Date.now(), uploader: {battery: 20}}]};
 
+  const levels = require('../lib/levels');
+
   it('display uploader battery status', function (done) {
     var sandbox = require('../lib/sandbox')();
     var ctx = {
@@ -14,7 +16,7 @@ describe('Uploader Battery', function ( ) {
       , language: require('../lib/language')(fs)
     };
     ctx.language.set('en');
-    ctx.levels = require('../lib/levels');
+    ctx.levels = levels;
     
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
 
@@ -47,6 +49,7 @@ describe('Uploader Battery', function ( ) {
       , language: require('../lib/language')(fs)
     };
     ctx.language.set('en');
+    ctx.levels = levels;
 
     var sandbox = require('../lib/sandbox')();
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
@@ -68,6 +71,7 @@ describe('Uploader Battery', function ( ) {
       , language: require('../lib/language')(fs)
     };
     ctx.language.set('en');
+    ctx.levels = levels;
 
     var sandbox = require('../lib/sandbox')();
     var sbx = sandbox.clientInit(ctx, Date.now(), {});
@@ -87,6 +91,7 @@ describe('Uploader Battery', function ( ) {
       }, language: require('../lib/language')(fs)
     };
     ctx.language.set('en');
+    ctx.levels = levels;
 
     var sandbox = require('../lib/sandbox')();
     var sbx = sandbox.clientInit(ctx, Date.now(), {devicestatus: [{uploader: {battery: -1}}]});
@@ -102,6 +107,7 @@ describe('Uploader Battery', function ( ) {
       , language: require('../lib/language')(fs)
     };
     ctx.language.set('en');
+    ctx.levels = levels;
 
     var sandbox = require('../lib/sandbox')();
     var sbx = sandbox.clientInit(ctx, Date.now(), data);

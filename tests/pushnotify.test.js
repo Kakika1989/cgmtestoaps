@@ -1,13 +1,15 @@
 'use strict';
 
-var should = require('should');
-var levels = require('../lib/levels');
+const should = require('should');
 
 describe('pushnotify', function ( ) {
+
+  const levels = require('../lib/levels');
 
   it('send a pushover alarm, but only 1 time', function (done) {
     var env = require('../env')();
     var ctx = {};
+    ctx.levels = levels;
 
     ctx.notifications = require('../lib/notifications')(env, ctx);
 
@@ -41,6 +43,7 @@ describe('pushnotify', function ( ) {
   it('send a pushover notification, but only 1 time', function (done) {
     var env = require('../env')();
     var ctx = {};
+    ctx.levels = levels;
 
     ctx.notifications = require('../lib/notifications')(env, ctx);
 
@@ -73,6 +76,7 @@ describe('pushnotify', function ( ) {
   it('send a pushover alarm, and then cancel', function (done) {
     var env = require('../env')();
     var ctx = {};
+    ctx.levels = levels;
 
     ctx.notifications = require('../lib/notifications')(env, ctx);
 

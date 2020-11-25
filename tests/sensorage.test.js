@@ -1,15 +1,17 @@
 'use strict';
 
-var should = require('should');
-var times = require('../lib/times');
-var levels = require('../lib/levels');
+const should = require('should');
+const times = require('../lib/times');
 
 describe('sage', function ( ) {
+
+  const levels = require('../lib/levels');
   var env = require('../env')();
   var ctx = {};
   ctx.ddata = require('../lib/data/ddata')();
-  ctx.notifications = require('../lib/notifications')(env, ctx);
   ctx.language = require('../lib/language')();
+  ctx.levels = levels;
+  ctx.notifications = require('../lib/notifications')(env, ctx);
   var sage = require('../lib/plugins/sensorage')(ctx);
   var sandbox = require('../lib/sandbox')();
 
@@ -45,6 +47,7 @@ describe('sage', function ( ) {
       }
     };
     ctx.language = require('../lib/language')();
+    ctx.levels = levels;
 
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
     sage.setProperties(sbx);
@@ -73,6 +76,7 @@ describe('sage', function ( ) {
       }
     };
     ctx.language = require('../lib/language')();
+    ctx.levels = levels;
 
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
     sage.setProperties(sbx);
@@ -101,6 +105,7 @@ describe('sage', function ( ) {
       }
     };
     ctx.language = require('../lib/language')();
+    ctx.levels = levels;
 
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
     sage.setProperties(sbx);
@@ -131,6 +136,7 @@ describe('sage', function ( ) {
       }
     };
     ctx.language = require('../lib/language')();
+    ctx.levels = levels;
 
     var sbx = sandbox.clientInit(ctx, Date.now(), data);
     sage.setProperties(sbx);

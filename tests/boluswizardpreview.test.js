@@ -1,6 +1,5 @@
 var should = require('should');
 var Stream = require('stream');
-var levels = require('../lib/levels');
 
 describe('boluswizardpreview', function ( ) {
   var env = require('../env')();
@@ -10,6 +9,9 @@ describe('boluswizardpreview', function ( ) {
     settings: {}
     , language: require('../lib/language')()
   };
+  const levels = require('../lib/levels');
+  ctx.levels = levels;
+
   ctx.ddata = require('../lib/data/ddata')();
   ctx.notifications = require('../lib/notifications')(env, ctx);
 

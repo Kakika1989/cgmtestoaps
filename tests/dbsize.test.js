@@ -1,10 +1,12 @@
 'use strict';
 
 const fs = require('fs');
-const language = require('../lib/language')(fs);
 require('should');
 
 describe('Database Size', function() {
+
+  const language = require('../lib/language')(fs);
+  const levels = require('../lib/levels');
 
   var dataInRange = { dbstats: { dataSize: 1024 * 1024 * 137, indexSize: 1024 * 1024 * 48, fileSize: 1024 * 1024 * 256 } };
   var dataWarn = { dbstats: { dataSize: 1024 * 1024 * 250, indexSize: 1024 * 1024 * 100, fileSize: 1024 * 1024 * 360 } };
@@ -17,8 +19,8 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
+      , levels: levels
     };
-    ctx.levels = require('../lib/levels');
 
     var sbx = sandbox.clientInit(ctx, Date.now(), dataInRange);
 
@@ -42,8 +44,8 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
+      , levels: levels
     };
-    ctx.levels = require('../lib/levels');
 
     var sbx = sandbox.clientInit(ctx, Date.now(), dataWarn);
 
@@ -68,8 +70,8 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
+      , levels: levels
     };
-    ctx.levels = require('../lib/levels');
 
     var sbx = sandbox.clientInit(ctx, Date.now(), dataUrgent);
 
@@ -93,10 +95,11 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
-      , notifications: require('../lib/notifications')(env, ctx)
+      , levels: levels
     };
+
+    ctx.notifications = require('../lib/notifications')(env, ctx);
     ctx.notifications.initRequests();
-    ctx.levels = require('../lib/levels');
 
     var sbx = sandbox.clientInit(ctx, Date.now(), dataWarn);
     sbx.extendedSettings = { 'enableAlerts': 'TRUE' };
@@ -120,8 +123,10 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
-      , notifications: require('../lib/notifications')(env, ctx)
+      , levels: levels
     };
+
+    ctx.notifications = require('../lib/notifications')(env, ctx);
     ctx.notifications.initRequests();
     ctx.levels = require('../lib/levels');
 
@@ -154,6 +159,7 @@ describe('Database Size', function() {
         }
       }
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();
@@ -185,6 +191,7 @@ describe('Database Size', function() {
         }
       }
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();
@@ -216,6 +223,7 @@ describe('Database Size', function() {
         }
       }
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();
@@ -247,6 +255,7 @@ describe('Database Size', function() {
         }
       }
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();
@@ -268,6 +277,7 @@ describe('Database Size', function() {
         }
       }
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();
@@ -284,6 +294,7 @@ describe('Database Size', function() {
     var ctx = {
       settings: {}
       , language: language
+      , levels: levels
     };
 
     var sandbox = require('../lib/sandbox')();

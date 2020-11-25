@@ -1,7 +1,6 @@
 'use strict';
 
 const should = require('should');
-const levels = require('../lib/levels');
 const fs = require('fs');
 
 const FIVE_MINS = 300000;
@@ -12,9 +11,11 @@ describe('ar2', function ( ) {
     settings: {}
     , language: require('../lib/language')(fs)
   };
+  const levels = require('../lib/levels');
+  ctx.levels = levels;
+  
   ctx.ddata = require('../lib/data/ddata')();
   ctx.notifications = require('../lib/notifications')(env, ctx);
-  ctx.levels = levels;
 
   var ar2 = require('../lib/plugins/ar2')(ctx);
   var bgnow = require('../lib/plugins/bgnow')(ctx);

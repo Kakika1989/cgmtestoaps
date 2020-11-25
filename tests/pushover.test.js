@@ -1,7 +1,7 @@
 'use strict';
 
-var should = require('should');
-var levels = require('../lib/levels');
+const should = require('should');
+const levels = require('../lib/levels');
 
 describe('pushover', function ( ) {
 
@@ -18,6 +18,8 @@ describe('pushover', function ( ) {
       }
     }
   };
+
+  env.levels = levels;
 
   var pushover = require('../lib/plugins/pushover')(env);
 
@@ -77,6 +79,8 @@ describe('support legacy pushover groupkey', function ( ) {
     }
   };
 
+  env.levels = levels;
+
   var pushover = require('../lib/plugins/pushover')(env);
 
   it('send', function (done) {
@@ -112,6 +116,8 @@ describe('multi announcement pushover', function ( ) {
       }
     }
   };
+
+  env.levels = levels;
 
   var pushover = require('../lib/plugins/pushover')(env);
 
@@ -156,6 +162,8 @@ describe('announcement only pushover', function ( ) {
       }
     }
   };
+
+  env.levels = levels;
 
   var pushover = require('../lib/plugins/pushover')(env);
 

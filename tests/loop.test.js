@@ -4,117 +4,120 @@ const _ = require('lodash');
 const should = require('should');
 const moment = require('moment');
 const fs = require('fs');
-const language = require('../lib/language')(fs);
 
-var ctx = {
-  language: language
-  , settings: require('../lib/settings')()
-};
-ctx.language.set('en');
-var env = require('../env')();
-var loop = require('../lib/plugins/loop')(ctx);
-var sandbox = require('../lib/sandbox')();
-var levels = require('../lib/levels');
+describe('loop', function() {
 
-var statuses = [
-  {
-     'created_at':'2016-08-13T20:09:15Z',
-     'device':'loop://ExamplePhone',
-     'loop':{
-        'enacted':{
-           'timestamp':'2016-08-13T20:09:15Z',
-           'rate':0.875,
-           'duration':30,
-           'received':true
-        },
-        'version':'0.9.1',
-        'recommendedBolus':0,
-        'timestamp':'2016-08-13T20:09:15Z',
-        'predicted':{
-           'startDate':'2016-08-13T20:03:47Z',
-           'values':[
-              149,
-              149,
-              148,
-              148,
-              147,
-              147
+  const language = require('../lib/language')(fs);
+
+  const ctx = {
+    language: language
+    , settings: require('../lib/settings')()
+  };
+  ctx.language.set('en');
+  const env = require('../env')();
+  const sandbox = require('../lib/sandbox')();
+  const levels = require('../lib/levels');
+  ctx.levels = levels;
+
+  var loop = require('../lib/plugins/loop')(ctx);
+
+  var statuses = [
+    {
+      'created_at': '2016-08-13T20:09:15Z'
+      , 'device': 'loop://ExamplePhone'
+      , 'loop': {
+        'enacted': {
+          'timestamp': '2016-08-13T20:09:15Z'
+          , 'rate': 0.875
+          , 'duration': 30
+          , 'received': true
+        }
+        , 'version': '0.9.1'
+        , 'recommendedBolus': 0
+        , 'timestamp': '2016-08-13T20:09:15Z'
+        , 'predicted': {
+          'startDate': '2016-08-13T20:03:47Z'
+          , 'values': [
+              149
+              , 149
+              , 148
+              , 148
+              , 147
+              , 147
            ]
-        },
-        'iob':{
-           'timestamp':'2016-08-13T20:05:00Z',
-           'iob':0.1733152537837709
-        },
-        'name':'Loop'
-     }
-  },
-  {
-     'created_at':'2016-08-13T20:04:15Z',
-     'device':'loop://ExamplePhone',
-     'loop':{
-        'version':'0.9.1',
-        'recommendedBolus':0,
-        'timestamp':'2016-08-13T20:04:15Z',
-        'failureReason':'SomeError',
-        'name':'Loop'
-     }
-  },
-  {
-    'created_at':'2016-08-13T01:13:20Z',
-    'device':'loop://ExamplePhone',
-    'loop':{
-      'timestamp':'2016-08-13T01:18:20Z',
-      'version':'0.9.1',
-      'iob':{
-        'timestamp':'2016-08-13T01:15:00Z',
-        'iob':-0.1205140849137931
-      },
-      'name':'Loop'
-    }
-  },
-  {
-    'created_at':'2016-08-13T01:13:20Z',
-    'device':'loop://ExamplePhone',
-    'loop':{
-      'timestamp':'2016-08-13T01:13:20Z',
-      'version':'0.9.1',
-      'iob':{
-        'timestamp':'2016-08-13T01:10:00Z',
-        'iob':-0.1205140849137931
-      },
-      'failureReason':'StaleDataError(\"Glucose Date: 2016-08-12 23:23:49 +0000 or Pump status date: 2016-08-13 01:13:10 +0000 older than 15.0 min\")',
-      'name':'Loop'
-    }
-  },
-  {
-    'created_at':'2016-08-13T01:13:15Z',
-    'pump':{
-      'reservoir':90.5,
-      'clock':'2016-08-13T01:13:10Z',
-      'battery':{
-        'status':'normal',
-        'voltage':1.5
-      },
-      'pumpID':'543204'
-    },
-    'device':'loop://ExamplePhone',
-    'uploader':{
-      'timestamp':'2016-08-13T01:13:15Z',
-      'battery':43,
-      'name':'ExamplePhone'
-    }
+        }
+        , 'iob': {
+          'timestamp': '2016-08-13T20:05:00Z'
+          , 'iob': 0.1733152537837709
+        }
+        , 'name': 'Loop'
+      }
+  }
+    , {
+      'created_at': '2016-08-13T20:04:15Z'
+      , 'device': 'loop://ExamplePhone'
+      , 'loop': {
+        'version': '0.9.1'
+        , 'recommendedBolus': 0
+        , 'timestamp': '2016-08-13T20:04:15Z'
+        , 'failureReason': 'SomeError'
+        , 'name': 'Loop'
+      }
+  }
+    , {
+      'created_at': '2016-08-13T01:13:20Z'
+      , 'device': 'loop://ExamplePhone'
+      , 'loop': {
+        'timestamp': '2016-08-13T01:18:20Z'
+        , 'version': '0.9.1'
+        , 'iob': {
+          'timestamp': '2016-08-13T01:15:00Z'
+          , 'iob': -0.1205140849137931
+        }
+        , 'name': 'Loop'
+      }
+  }
+    , {
+      'created_at': '2016-08-13T01:13:20Z'
+      , 'device': 'loop://ExamplePhone'
+      , 'loop': {
+        'timestamp': '2016-08-13T01:13:20Z'
+        , 'version': '0.9.1'
+        , 'iob': {
+          'timestamp': '2016-08-13T01:10:00Z'
+          , 'iob': -0.1205140849137931
+        }
+        , 'failureReason': 'StaleDataError(\"Glucose Date: 2016-08-12 23:23:49 +0000 or Pump status date: 2016-08-13 01:13:10 +0000 older than 15.0 min\")'
+        , 'name': 'Loop'
+      }
+  }
+    , {
+      'created_at': '2016-08-13T01:13:15Z'
+      , 'pump': {
+        'reservoir': 90.5
+        , 'clock': '2016-08-13T01:13:10Z'
+        , 'battery': {
+          'status': 'normal'
+          , 'voltage': 1.5
+        }
+        , 'pumpID': '543204'
+      }
+      , 'device': 'loop://ExamplePhone'
+      , 'uploader': {
+        'timestamp': '2016-08-13T01:13:15Z'
+        , 'battery': 43
+        , 'name': 'ExamplePhone'
+      }
   }
 ];
 
-var now = moment(statuses[0].created_at);
+  var now = moment(statuses[0].created_at);
 
-_.forEach(statuses, function updateMills (status) {
-  status.mills = moment(status.created_at).valueOf();
-});
+  _.forEach(statuses, function updateMills (status) {
+    status.mills = moment(status.created_at).valueOf();
+  });
 
-describe('loop', function ( ) {
-
-  it('should set the property and update the pill and add forecast points', function (done) {
+  it('should set the property and update the pill and add forecast points', function(done) {
     var ctx = {
       settings: {
         units: 'mg/dl'
@@ -133,9 +136,10 @@ describe('loop', function ( ) {
         }
       }
       , language: language
-   };
+      , levels: levels
+    };
 
-    var sbx = sandbox.clientInit(ctx, now.valueOf(), {devicestatus: statuses});
+    var sbx = sandbox.clientInit(ctx, now.valueOf(), { devicestatus: statuses });
 
     var unmockedOfferProperty = sbx.offerProperty;
     sbx.offerProperty = function mockedOfferProperty (name, setter) {
@@ -154,7 +158,7 @@ describe('loop', function ( ) {
     loop.updateVisualisation(sbx);
   });
 
-  it('should show errors', function (done) {
+  it('should show errors', function(done) {
     var ctx = {
       settings: {
         units: 'mg/dl'
@@ -168,14 +172,15 @@ describe('loop', function ( ) {
           first.value.should.equal('Error: SomeError');
           done();
         }
+        , language: language
+      }
       , language: language
-      },
-      language: language
+      , levels: levels
     };
 
     var errorTime = moment(statuses[1].created_at);
 
-    var sbx = sandbox.clientInit(ctx, errorTime.valueOf(), {devicestatus: statuses});
+    var sbx = sandbox.clientInit(ctx, errorTime.valueOf(), { devicestatus: statuses });
 
     var unmockedOfferProperty = sbx.offerProperty;
     sbx.offerProperty = function mockedOfferProperty (name, setter) {
@@ -196,21 +201,21 @@ describe('loop', function ( ) {
 
   });
 
-
-  it('should check the recieved flag to see if it was received', function (done) {
+  it('should check the recieved flag to see if it was received', function(done) {
     var ctx = {
       settings: {
         units: 'mg/dl'
       }
-      , notifications: require('../lib/notifications')(env, ctx)
       , language: language
+      , levels: levels
     };
 
+    ctx.notifications = require('../lib/notifications')(env, ctx);
     ctx.notifications.initRequests();
 
     var notStatuses = _.cloneDeep(statuses);
     notStatuses[0].loop.enacted.received = false;
-    var sbx = require('../lib/sandbox')().clientInit(ctx, now, {devicestatus: notStatuses});
+    var sbx = require('../lib/sandbox')().clientInit(ctx, now, { devicestatus: notStatuses });
 
     sbx.offerProperty = function mockedOfferProperty (name, setter) {
       name.should.equal('loop');
@@ -224,18 +229,19 @@ describe('loop', function ( ) {
     loop.setProperties(sbx);
   });
 
-  it('should generate an alert for a stuck loop', function (done) {
+  it('should generate an alert for a stuck loop', function(done) {
     var ctx = {
       settings: {
         units: 'mg/dl'
       }
-      , notifications: require('../lib/notifications')(env, ctx)
       , language: language
+      , levels: levels
     };
 
+    ctx.notifications = require('../lib/notifications')(env, ctx);
     ctx.notifications.initRequests();
 
-    var sbx = sandbox.clientInit(ctx, now.clone().add(2, 'hours').valueOf(), {devicestatus: statuses});
+    var sbx = sandbox.clientInit(ctx, now.clone().add(2, 'hours').valueOf(), { devicestatus: statuses });
     sbx.extendedSettings = { 'enableAlerts': 'TRUE' };
     loop.setProperties(sbx);
     loop.checkNotifications(sbx);
@@ -246,25 +252,27 @@ describe('loop', function ( ) {
     done();
   });
 
-  it('should handle virtAsst requests', function (done) {
+  it('should handle virtAsst requests', function(done) {
     var ctx = {
       settings: {
         units: 'mg/dl'
       }
-      , notifications: require('../lib/notifications')(env, ctx)
       , language: language
+      , levels: levels
     };
 
-    var sbx = sandbox.clientInit(ctx, now.valueOf(), {devicestatus: statuses});
+    ctx.notifications = require('../lib/notifications')(env, ctx);
+
+    var sbx = sandbox.clientInit(ctx, now.valueOf(), { devicestatus: statuses });
     loop.setProperties(sbx);
 
     loop.virtAsst.intentHandlers.length.should.equal(2);
 
-    loop.virtAsst.intentHandlers[0].intentHandler(function next(title, response) {
+    loop.virtAsst.intentHandlers[0].intentHandler(function next (title, response) {
       title.should.equal('Loop Forecast');
       response.should.equal('According to the loop forecast you are expected to be between 147 and 149 over the next in 25 minutes');
 
-      loop.virtAsst.intentHandlers[1].intentHandler(function next(title, response) {
+      loop.virtAsst.intentHandlers[1].intentHandler(function next (title, response) {
         title.should.equal('Last Loop');
         response.should.equal('The last successful loop was a few seconds ago');
         done();

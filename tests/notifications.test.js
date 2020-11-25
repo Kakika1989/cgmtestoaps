@@ -1,8 +1,6 @@
 var should = require('should');
 var Stream = require('stream');
 
-var levels = require('../lib/levels');
-
 describe('notifications', function ( ) {
 
   var env = {testMode: true};
@@ -13,6 +11,11 @@ describe('notifications', function ( ) {
       lastUpdated: Date.now()
     }
   };
+  const language = require('../lib/language')();
+  ctx.language = language;
+
+  const levels = require('../lib/levels');
+  ctx.levels = levels;
 
   var notifications = require('../lib/notifications')(env, ctx);
 

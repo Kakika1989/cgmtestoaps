@@ -4,12 +4,14 @@ var request = require('supertest');
 var should = require('should');
 var Stream = require('stream');
 
-var levels = require('../lib/levels');
 var notificationsAPI = require('../lib/api/notifications-api');
 
 function examplePlugin () {}
 
 describe('Notifications API', function ( ) {
+
+  const levels = require('../lib/levels');
+  const language = require('../lib/language')();
 
   it('ack notifications', function (done) {
 
@@ -32,6 +34,8 @@ describe('Notifications API', function ( ) {
       }
     };
 
+    ctx.language = language;
+    ctx.levels = levels;
     ctx.authorization = require('../lib/authorization')(env, ctx);
 
     var notifications = require('../lib/notifications')(env, ctx);
